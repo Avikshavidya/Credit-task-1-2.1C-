@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <style>
+        
+        .todo-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .todo-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .delete-button {
+            background-color: #ff6347;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .delete-button:hover {
+            background-color: #ff0000;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>Todo App</h1>
+        <input v-model="newTask" @keyup.enter="addTask" placeholder="Add a new task">
+        <ul class="todo-list">
+            <li v-for="(task, index) in tasks" :key="index" class="todo-item">
+                
+                <button class="delete-button" @click="deleteTask(index)">Delete</button>
+            </li>
+        </ul>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.0.11/dist/vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    newTask: '',
+                    tasks: []
+                }
+            },
+            methods: {
+                addTask() {
+                    if (this.newTask.trim() !== '') {
+                        this.tasks.push(this.newTask);
+                        this.newTask = '';
+                    }
+                },
+                deleteTask(index) {
+                    this.tasks.splice(index, 1);
+                }
+            }
+        });
+
+        app.mount('#app');
+    </script>
+</body>
+</html>
